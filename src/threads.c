@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:08:25 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/02 16:53:33 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:26:18 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,20 @@ void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 	int	num;
 
 	num = philos[0].num_of_philo;
+	printf("num of philo: %d\n", num);
 	i = 0;
 	if (pthread_create(&controller, NULL, &observer_routine, philos) != 0)
-			end_simulation("Thread failed to create", table, philos, forks);
+		end_simulation("Thread failed to create", table, philos, forks);
 	while (i < num)
 	{
 		if (pthread_create(&philos[i].thread, NULL, &philosopher_routine,
-					philos) != 0)
+				&philos[i]) != 0)
 				end_simulation("Thread failed to create", table, philos, forks);
 		i++;
 	}
 	i = 0;
 	if (pthread_join(controller, NULL) != 0)
-			end_simulation("Thread join error", table, philos, forks);
+		end_simulation("Thread join error", table, philos, forks);
 	while (i < num)
 	{
 		if (pthread_join(philos[i].thread, NULL) != 0)

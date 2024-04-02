@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 23:05:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/02 16:55:04 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:13:13 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,10 @@ This routine will keep checking if the is_dead flag
 void	*observer_routine(void *p)
 {
 	t_philo *philos;
-	int	condition;
 
-	condition = 0;
 	philos = (t_philo *)p;
 	printf("%s", "observer routine started\n");
-	while (!condition)
+	while (1)
 	{
 		if (monitor_for_death(philos) || check_if_all_ate(philos))
 			break;
