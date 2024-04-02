@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:29:49 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/30 12:25:20 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:38:27 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philo.h"
+#include "../includes/philo.h"
 
 int	error_exit(const char *s)
 {
 	printf("%s\n", s);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 int	is_number(const char *s)
 {
 	if (*s == '\0')
-		return (0);
+		return 0;
 	if (*s == '+' || *s == '-')
 		s++;
 	while (*s != '\0')

@@ -9,10 +9,11 @@ SRC_FILES		= $(addprefix $(SRC_DIR)/, \
 					check_input.c \
 					init.c \
 					main.c \
+					observer.c \
 					threads.c \
 					routine.c \
 					time.c \
-					utils.c \)
+					utils.c)
 
 OBJECTS			= $(SRC_FILES:.c=.o)
 

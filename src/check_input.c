@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:34:52 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/01 00:49:18 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:43:46 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philo.h"
+#include "../includes/philo.h"
 
 /**
 1. Check if all inputs is a positive number
@@ -28,7 +28,7 @@ int	check_input(char **av)
 		error_exit("Invalid time to eat");
 	if (ft_atoi(av[4]) <= 60 || is_number(av[4]))
 		error_exit("Invalid time to sleep");
-	if (av[5] && ft_atoi(av[5]) || is_number(av[5]))
+	if (av[5] && (ft_atoi(av[5]) < 0 || is_number(av[5])))
 		error_exit("Invalid no of meals");
 	return (0);
 }
@@ -36,9 +36,8 @@ int	check_input(char **av)
 /**
 Frees all the mutexes and malloc arrays
 */
-
 void	end_simulation(char *message, t_table *dining_table,
-			t_philo *philos, t_mtx *forks,)
+			t_philo *philos, t_mtx *forks)
 {
 	int	i;
 	int	n;
@@ -57,14 +56,4 @@ void	end_simulation(char *message, t_table *dining_table,
 	}
 	free(philos);
 	free(forks);
-}
-
-void	init_simulation(t_table *table, t_philo *philos, t_mtx_*forks)
-{
-	int	num_of_philo;
-
-	num_of_philo = philos[0].num_of_philo;
-	init_table(dining_table);
-	init_philos(philos, forks, av);
-	init_forks(forks, num_of_philo);
 }
