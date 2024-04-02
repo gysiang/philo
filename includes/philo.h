@@ -6,13 +6,15 @@
 /*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:25:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/29 23:20:38 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/01 00:59:52 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <unistd.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -52,11 +54,11 @@ typedef struct s_philo
 	pthread_t	thread;
 	int			id;
 	int			meals_eaten;
-	size_t		time_to_die;
-	size_t		time_to_eat;
-	size_t		time_to_sleep;
-	size_t		start_time;
-	size_t		last_meal;
+	uint32_t	time_to_die;
+	uint32_t	time_to_eat;
+	uint32_t	time_to_sleep;
+	uint32_t	start_time;
+	uint32_t	last_meal;
 	int			is_eating;
 	int			num_of_philo;
 	int			num_of_times_each_philo_must_eat;
@@ -92,5 +94,21 @@ int	check_input(char **av);
 void	init_table(t_table *dining_table);
 t_mtx	init_forks(t_mtx *forks, int num_of_philo);
 t_philo	init_philo(t_philo *philos, t_mtx *forks, char **av);
+void	end_simulation(char *message, t_table *dining_table,
+		t_mtx forks, t_philo *philos);
+void	print_message(char *message, t_philo *philo, int id);
+void usleep_ms(uint32_t milliseconds);
+uint32_t	get_current_time(void);
+int	check_death(t_philo *philo);
+void	eating(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
+void	init_simulation(t_table *table, t_philo *philos, t_mtx_*forks);
+int	create_threads(t_table *table, t_philo *philos, t_mtx *forks);
+int	start_simulation(t_table *table, t_philo *philos, t_mtx *forks);
+
+void	*observer_routine(void *p);
+int	check_if_all_ate(t_philo *philos);
+int	monitor_for_death(t_philo *philos);
 
 #endif

@@ -6,7 +6,13 @@ CFLAGS			= -Wall -Wextra -Werror -I./includes
 SRC_DIR			= src
 
 SRC_FILES		= $(addprefix $(SRC_DIR)/, \
-					main.c)
+					check_input.c \
+					init.c \
+					main.c \
+					threads.c \
+					routine.c \
+					time.c \
+					utils.c \)
 
 OBJECTS			= $(SRC_FILES:.c=.o)
 
