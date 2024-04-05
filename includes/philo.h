@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:25:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/02 16:07:03 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:51:43 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_philo
 	int			is_eating;
 	int			num_of_philo;
 	int			num_of_times_each_philo_must_eat;
-	int			is_dead;
+	int			*is_dead;
 	t_mtx		*left_fork;
 	t_mtx		*right_fork;
 	t_mtx		*write_lock;
@@ -77,6 +77,7 @@ philos is the array that stores all the philo data
 */
 typedef struct s_table
 {
+	int			dead_flag;
 	t_mtx		write_lock;
 	t_mtx		dead_lock;
 	t_mtx		meal_lock;

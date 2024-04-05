@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:08:25 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/02 17:26:18 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:57:42 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int	check_death(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
-	if (philo->is_dead == 1)
+	if (*philo->is_dead == 1)
 	{
 		pthread_mutex_unlock(philo->dead_lock);
 		return (1);
@@ -52,7 +52,6 @@ void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 	int	num;
 
 	num = philos[0].num_of_philo;
-	printf("num of philo: %d\n", num);
 	i = 0;
 	if (pthread_create(&controller, NULL, &observer_routine, philos) != 0)
 		end_simulation("Thread failed to create", table, philos, forks);

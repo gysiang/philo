@@ -10,8 +10,8 @@ SRC_FILES		= $(addprefix $(SRC_DIR)/, \
 					init.c \
 					main.c \
 					observer.c \
-					threads.c \
 					routine.c \
+					threads.c \
 					time.c \
 					utils.c)
 

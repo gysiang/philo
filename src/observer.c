@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 23:05:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/02 17:13:13 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:37:17 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 static int	starved_to_death(t_philo *philo, uint32_t time_to_die)
 {
+	//uint32_t	current_time;
+
+	//current_time = get_current_time();
+	//printf("Current time: %u\n, Last meal time: %u\n", current_time, philo->last_meal);
 	pthread_mutex_lock(philo->meal_lock);
 	if (get_current_time() - philo->last_meal >= time_to_die
 			&& philo->is_eating == 0)
 	{
-		pthread_mutex_lock(philo->meal_lock);
+		pthread_mutex_unlock(philo->meal_lock);
 		return (1);
 	}
-	pthread_mutex_lock(philo->meal_lock);
+	pthread_mutex_unlock(philo->meal_lock);
 	return (0);
 }
 
@@ -36,14 +40,16 @@ int	monitor_for_death(t_philo *philos)
 	n = philos[0].num_of_philo;
 	while (i < n)
 	{
+		pthread_mutex_lock(philos[i].meal_lock);
 		if (starved_to_death(&philos[i], philos[i].time_to_die))
 		{
 			pthread_mutex_lock(philos[i].dead_lock);
-			print_message("died", &philos[i], philos->id);
-			philos[i].is_dead = 1;
+			print_message("died", &philos[i], philos[i].id);
+			*philos->is_dead = 1;
 			pthread_mutex_unlock(philos[i].dead_lock);
 			return (1);
 		}
+		pthread_mutex_unlock(philos[i].meal_lock);
 		i++;
 	}
 	return (0);
@@ -83,7 +89,7 @@ void	*observer_routine(void *p)
 	printf("%s", "observer routine started\n");
 	while (1)
 	{
-		if (monitor_for_death(philos) || check_if_all_ate(philos))
+		if (monitor_for_death(philos) == 1 || check_if_all_ate(philos) == 1)
 			break;
 	}
 	return (p);
