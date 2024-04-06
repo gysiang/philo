@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
+/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:29:49 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/05 14:54:35 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:01:35 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int	ft_atoi(const char *str)
 	return (sign * res);
 }
 
-void	print_message(char *message, t_philo *philo, int id)
+void	print_philo_action(char *message, t_philo *philo, int id)
 {
 	size_t	time;
 
 	pthread_mutex_lock(philo->write_lock);
-	time = get_current_time() - philo->start_time;
+	time = get_current_time() - philo->table->start_time;
 	if (!check_death(philo))
 		printf("%zu %d %s\n", time, id, message);
 	pthread_mutex_unlock(philo->write_lock);

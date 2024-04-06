@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
+/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:34:52 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/02 15:43:46 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:11:12 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	end_simulation(char *message, t_table *dining_table,
 	int	n;
 
 	i = 0;
-	n = philos[0].num_of_philo;
+	n = dining_table->num_of_philo;
 	if (message != NULL)
 		printf("%s\n", message);
 	pthread_mutex_destroy(&dining_table->write_lock);

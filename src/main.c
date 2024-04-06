@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
+/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:22:55 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/05 14:05:07 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:21:02 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,18 @@
 
 int	main(int ac, char **av)
 {
-	t_table		dining_table;
-	t_philo		*philos;
-	t_mtx		*forks;
-	int			num_of_philo;
+	t_table		table;
+	t_philo		philos[MAX_PHILO];
+	t_mtx		forks[MAX_PHILO];
 
 	if (ac == 5 || ac == 6)
 	{
 		if (!check_input(av))
-			printf("%s\n", "Input is okay");
-		num_of_philo = ft_atoi(av[1]);
-		philos = malloc(sizeof(t_philo) * num_of_philo);
-		forks = malloc(sizeof(t_mtx) * num_of_philo);
-		if (!philos || !forks)
-			return (1);
-		init_table(&dining_table);
-		init_forks(forks, num_of_philo);
-		init_philos(&dining_table, philos, forks, av);
-		start_simulation(&dining_table, philos, forks);
-		end_simulation(NULL, &dining_table, philos, forks);
+		{
+			init_simulation(&table, philos, forks, av);
+			start_simulation(&table, philos, forks);
+			end_simulation(NULL, &table, philos, forks);
+		}
 	}
 	else
 		error_exit("Incorrect Input ./philo time_to_die time_to_eat "

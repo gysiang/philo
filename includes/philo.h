@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
+/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:25:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/05 15:51:43 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 00:08:22 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <sys/select.h>
 
-# define MAX_PHILO 200
+# define MAX_PHILO 300
 # define TAKE_FORK "has taken a fork"
 # define EATING "is eating"
 # define SLEEPING "is sleeping"
@@ -49,25 +49,22 @@ typedef pthread_mutex_t	t_mtx;
 	m_lock: mutex to control when philo is eating
 */
 
+struct s_table;
+
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
-	int			meals_eaten;
-	uint32_t	time_to_die;
-	uint32_t	time_to_eat;
-	uint32_t	time_to_sleep;
-	uint32_t	start_time;
-	uint32_t	last_meal;
-	int			is_eating;
-	int			num_of_philo;
-	int			num_of_times_each_philo_must_eat;
-	int			*is_dead;
-	t_mtx		*left_fork;
-	t_mtx		*right_fork;
-	t_mtx		*write_lock;
-	t_mtx		*dead_lock;
-	t_mtx		*meal_lock;
+	pthread_t		thread_id;
+	int				id;
+	int				meals_eaten;
+	int				is_eating;
+	int				*is_dead;
+	uint32_t		last_meal;
+	struct s_table	*table;
+	t_mtx			*left_fork;
+	t_mtx			*right_fork;
+	t_mtx			*write_lock;
+	t_mtx			*dead_lock;
+	t_mtx			*meal_lock;
 }	t_philo;
 
 /**
@@ -78,6 +75,12 @@ philos is the array that stores all the philo data
 typedef struct s_table
 {
 	int			dead_flag;
+	int			num_of_philo;
+	uint32_t	time_to_die;
+	uint32_t	time_to_eat;
+	uint32_t	time_to_sleep;
+	int			target_meals;
+	uint32_t	start_time;
 	t_mtx		write_lock;
 	t_mtx		dead_lock;
 	t_mtx		meal_lock;
@@ -88,12 +91,12 @@ int	is_number(const char *s);
 int	ft_atoi(const char *str);
 int	error_exit(const char *s);
 int	check_input(char **av);
-void	print_message(char *message, t_philo *philo, int id);
+void	print_philo_action(char *message, t_philo *philo, int id);
 void	usleep_ms(uint32_t milliseconds);
 uint32_t	get_current_time(void);
 
 // init
-void	init_table(t_table *dining_table);
+void	init_table(t_table *dining_table, char **av);
 void	init_forks(t_mtx *forks, int num_of_philo);
 void	init_philos(t_table *dining_table, t_philo *philos, t_mtx *forks,
 		char **av);
@@ -106,11 +109,11 @@ void	*philosopher_routine(void *p);
 void	*observer_routine(void *p);
 int	check_death(t_philo *philo);
 int	check_if_all_ate(t_philo *philos);
-int	monitor_for_death(t_philo *philos);
+int	death_checker(t_philo *philos);
 
 // simulation
-void	init_simulation(t_table *table, t_philo *philos, t_mtx *forks,
-		char **av);
+void	init_simulation(t_table *table, t_philo *philos,
+		t_mtx *forks, char **av);
 void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks);
 void	end_simulation(char *message, t_table *dining_table,
 		t_philo *philos, t_mtx *forks);
