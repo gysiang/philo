@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:25:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 00:08:22 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 10:32:49 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_philo
 	int				id;
 	int				meals_eaten;
 	int				is_eating;
-	int				*is_dead;
 	uint32_t		last_meal;
 	struct s_table	*table;
 	t_mtx			*left_fork;
@@ -115,7 +114,6 @@ int	death_checker(t_philo *philos);
 void	init_simulation(t_table *table, t_philo *philos,
 		t_mtx *forks, char **av);
 void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks);
-void	end_simulation(char *message, t_table *dining_table,
-		t_philo *philos, t_mtx *forks);
+void	end_simulation(char *message, t_table *dining_table, t_mtx *forks);
 
 #endif

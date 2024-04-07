@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:14:47 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/06 23:50:21 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 09:52:55 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	eating(t_philo *philo)
 
 	table = philo->table;
 	if (table->num_of_philo == 1)
-		return (usleep_ms(philo->table->time_to_die));
+		return (usleep_ms(table->time_to_die));
 	pthread_mutex_lock(philo->left_fork);
 	print_philo_action(TAKE_FORK, philo, philo->id);
 	pthread_mutex_lock(philo->right_fork);

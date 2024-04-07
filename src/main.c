@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:22:55 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/06 22:21:02 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 10:33:58 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 		{
 			init_simulation(&table, philos, forks, av);
 			start_simulation(&table, philos, forks);
-			end_simulation(NULL, &table, philos, forks);
+			end_simulation(NULL, &table, forks);
 		}
 	}
 	else

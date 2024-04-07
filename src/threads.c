@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:08:25 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 00:34:45 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 10:33:12 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@
 
 int	check_death(t_philo *philo)
 {
-	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->is_dead == 1)
+	if (philo->table->dead_flag == 1)
 	{
-		return (pthread_mutex_unlock(philo->dead_lock),1);
+		return (1);
 	}
-	pthread_mutex_unlock(philo->dead_lock);
 	return (0);
 }
 
 void	*philosopher_routine(void *p)
 {
 	t_philo *philo;
+	t_table	*table;
 
 	philo = (t_philo *)p;
+	table = philo->table;
 	if (philo->id % 2 == 0)
 		usleep_ms(1);
-	if (!check_death(philo))
+	if (table->dead_flag != 1)
 	{
 		eating(philo);
 		sleeping(philo);
@@ -53,21 +53,21 @@ void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 	num = philos->table->num_of_philo;
 	i = 0;
 	if (pthread_create(&controller, NULL, &observer_routine, philos) != 0)
-		end_simulation("Thread failed to create", table, philos, forks);
+		end_simulation("Thread failed to create", table, forks);
 	while (i < num)
 	{
 		if (pthread_create(&philos[i].thread_id, NULL, &philosopher_routine,
 				&philos[i]) != 0)
-				end_simulation("Thread failed to create", table, philos, forks);
+				end_simulation("Thread failed to create", table, forks);
 		i++;
 	}
 	i = 0;
 	if (pthread_join(controller, NULL) != 0)
-		end_simulation("Thread join error", table, philos, forks);
+		end_simulation("Thread join error", table, forks);
 	while (i < num)
 	{
 		if (pthread_join(philos[i].thread_id, NULL) != 0)
-				end_simulation("Thread join error", table, philos, forks);
+				end_simulation("Thread join error", table, forks);
 		i++;
 	}
 }

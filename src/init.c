@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:30:47 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 00:10:50 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 10:13:28 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	init_philos(t_table *dining_table, t_philo *philos, t_mtx *forks,
 		philos[i].is_eating = 0;
 		philos[i].meals_eaten = 0;
 		philos[i].is_eating = 0;
-		philos[i].is_dead = &dining_table->dead_flag;
 		philos[i].left_fork = &forks[i];
 		philos[i].right_fork = &forks[(i + 1) % dining_table->num_of_philo];
 		philos[i].table = dining_table;

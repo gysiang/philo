@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:34:52 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/06 22:11:12 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/07 10:32:38 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_input(char **av)
 Frees all the mutexes and malloc arrays
 */
 void	end_simulation(char *message, t_table *dining_table,
-			t_philo *philos, t_mtx *forks)
+			t_mtx *forks)
 {
 	int	i;
 	int	n;
@@ -54,6 +54,6 @@ void	end_simulation(char *message, t_table *dining_table,
 		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
-	free(philos);
-	free(forks);
+	//free(philos);
+	//free(forks);
 }
