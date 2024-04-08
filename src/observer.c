@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 23:05:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/08 15:29:17 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:04:13 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	all_ate(t_philo *philos)
 
 	i = 0;
 	num = philos->table->num_of_philo;
-	target_meals = philos->table->num_of_philo;
+	target_meals = philos->table->target_meals;
 	met_target = 0;
 	if (target_meals == -1)
 		return (0);
@@ -72,10 +72,16 @@ int	all_ate(t_philo *philos)
 			met_target++;
 		i++;
 	}
-	if (num == met_target)
-		return (1);
+	if (met_target == num)
+	{
+		//printf("all philo has ate %d meals\n", target_meals);
+		pthread_mutex_lock(philos->dead_lock);
+		philos->table->dead_flag = 1;
+		pthread_mutex_unlock(philos->dead_lock);
+	}
 	return (0);
 }
+
 
 /**
 This routine will keep checking if the is_dead flag
@@ -89,7 +95,7 @@ void	*observer_routine(void *p)
 	while (1)
 	{
 		//printf("entered into observer loop\n");
-		if (death_checker(philos))
+		if (death_checker(philos) || all_ate(philos))
 		{
 			//printf("before observer break");
 			break ;
