@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:08:25 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 10:33:12 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:29:06 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 int	check_death(t_philo *philo)
 {
+	//printf("check death: %d\n", philo->table->dead_flag);
 	if (philo->table->dead_flag == 1)
 	{
 		return (1);
@@ -29,22 +30,24 @@ int	check_death(t_philo *philo)
 void	*philosopher_routine(void *p)
 {
 	t_philo *philo;
-	t_table	*table;
 
 	philo = (t_philo *)p;
-	table = philo->table;
 	if (philo->id % 2 == 0)
 		usleep_ms(1);
-	if (table->dead_flag != 1)
+	//printf("philo routine started\n");
+	while (!check_death(philo))
 	{
+		//printf("philo dead flag:%d\n", philo->table->dead_flag);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
 	}
+	//printf("philo routine ended");
 	return (p);
 }
 
-void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
+
+int	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 {
 	pthread_t	controller;
 	int	i;
@@ -70,4 +73,5 @@ void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 				end_simulation("Thread join error", table, forks);
 		i++;
 	}
+	return (0);
 }

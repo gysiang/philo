@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:14:47 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 09:52:55 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:23:26 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,26 @@ void	eating(t_philo *philo)
 	t_table *table;
 
 	table = philo->table;
-	if (table->num_of_philo == 1)
-		return (usleep_ms(table->time_to_die));
 	pthread_mutex_lock(philo->left_fork);
 	print_philo_action(TAKE_FORK, philo, philo->id);
+	if (table->num_of_philo == 1)
+	{
+		usleep_ms(table->time_to_die);
+		pthread_mutex_unlock(philo->left_fork);
+		return ;
+	}
 	pthread_mutex_lock(philo->right_fork);
 	print_philo_action(TAKE_FORK, philo, philo->id);
 	print_philo_action(EATING, philo, philo->id);
 	pthread_mutex_lock(philo->meal_lock);
-	philo->is_eating = 1;
 	philo->meals_eaten += 1;
 	philo->last_meal = get_current_time();
 	pthread_mutex_unlock(philo->meal_lock);
 	usleep_ms(table->time_to_eat);
-	philo->is_eating = 0;
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
+//usleep_ms(philo->table->time_to_sleep);
 
 void	sleeping(t_philo *philo)
 {

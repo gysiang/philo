@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:22:55 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 10:33:58 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:58:17 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,11 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		if (!check_input(av))
-		{
-			init_simulation(&table, philos, forks, av);
-			start_simulation(&table, philos, forks);
-			end_simulation(NULL, &table, forks);
-		}
+		if (check_input(av) == 1)
+			return (1);
+		init_simulation(&table, philos, forks, av);
+		start_simulation(&table, philos, forks);
+		end_simulation(NULL, &table, forks);
 	}
-	else
-		error_exit("Incorrect Input ./philo time_to_die time_to_eat "
-			"time_to_eat [num_of_meals]");
 	return (0);
 }

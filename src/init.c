@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:30:47 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 10:13:28 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:39:51 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ void	init_philos(t_table *dining_table, t_philo *philos, t_mtx *forks,
 	{
 
 		philos[i].id = i + 1;
-		philos[i].is_eating = 0;
 		philos[i].meals_eaten = 0;
-		philos[i].is_eating = 0;
 		philos[i].left_fork = &forks[i];
 		philos[i].right_fork = &forks[(i + 1) % dining_table->num_of_philo];
 		philos[i].table = dining_table;
+		philos[i].last_meal = get_current_time();
 		philos[i].write_lock = &dining_table->write_lock;
 		philos[i].dead_lock = &dining_table->dead_lock;
 		philos[i].meal_lock = &dining_table->meal_lock;

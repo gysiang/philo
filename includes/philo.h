@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:25:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 10:32:49 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:45:52 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_philo
 	pthread_t		thread_id;
 	int				id;
 	int				meals_eaten;
-	int				is_eating;
 	uint32_t		last_meal;
 	struct s_table	*table;
 	t_mtx			*left_fork;
@@ -107,13 +106,13 @@ void	thinking(t_philo *philo);
 void	*philosopher_routine(void *p);
 void	*observer_routine(void *p);
 int	check_death(t_philo *philo);
-int	check_if_all_ate(t_philo *philos);
+int	all_ate(t_philo *philos);
 int	death_checker(t_philo *philos);
 
 // simulation
 void	init_simulation(t_table *table, t_philo *philos,
 		t_mtx *forks, char **av);
-void	start_simulation(t_table *table, t_philo *philos, t_mtx *forks);
-void	end_simulation(char *message, t_table *dining_table, t_mtx *forks);
+int	start_simulation(t_table *table, t_philo *philos, t_mtx *forks);
+int	end_simulation(char *message, t_table *dining_table, t_mtx *forks);
 
 #endif
