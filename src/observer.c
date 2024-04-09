@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 23:05:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/08 16:04:13 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:03:48 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	all_ate(t_philo *philos)
 	}
 	if (met_target == num)
 	{
-		//printf("all philo has ate %d meals\n", target_meals);
 		pthread_mutex_lock(philos->dead_lock);
 		philos->table->dead_flag = 1;
 		pthread_mutex_unlock(philos->dead_lock);

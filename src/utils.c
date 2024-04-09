@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:29:49 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/07 11:40:09 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:07:04 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	error_exit(const char *s)
 {
 	printf("%s\n", s);
-	return (EXIT_FAILURE);
+	return (1);
 }
 
 int	is_number(const char *s)
