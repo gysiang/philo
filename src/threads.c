@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:08:25 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/08 15:29:06 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:04:52 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 int	check_death(t_philo *philo)
 {
-	//printf("check death: %d\n", philo->table->dead_flag);
 	if (philo->table->dead_flag == 1)
 	{
 		return (1);
@@ -29,29 +28,25 @@ int	check_death(t_philo *philo)
 
 void	*philosopher_routine(void *p)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)p;
 	if (philo->id % 2 == 0)
 		usleep_ms(1);
-	//printf("philo routine started\n");
 	while (!check_death(philo))
 	{
-		//printf("philo dead flag:%d\n", philo->table->dead_flag);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
 	}
-	//printf("philo routine ended");
 	return (p);
 }
-
 
 int	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 {
 	pthread_t	controller;
-	int	i;
-	int	num;
+	int			i;
+	int			num;
 
 	num = philos->table->num_of_philo;
 	i = 0;
@@ -61,7 +56,7 @@ int	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 	{
 		if (pthread_create(&philos[i].thread_id, NULL, &philosopher_routine,
 				&philos[i]) != 0)
-				end_simulation("Thread failed to create", table, forks);
+			end_simulation("Thread failed to create", table, forks);
 		i++;
 	}
 	i = 0;
@@ -70,7 +65,7 @@ int	start_simulation(t_table *table, t_philo *philos, t_mtx *forks)
 	while (i < num)
 	{
 		if (pthread_join(philos[i].thread_id, NULL) != 0)
-				end_simulation("Thread join error", table, forks);
+			end_simulation("Thread join error", table, forks);
 		i++;
 	}
 	return (0);

@@ -6,18 +6,23 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 23:05:38 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/09 13:03:48 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:23:19 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * if philo is eating , the meal_lock mutex (also shared by eating) will make
+ * this function wait until it can lock it.
+*/
 static int	starved(t_philo *philo, uint32_t time_to_die)
 {
 	int	is_starved;
 
 	pthread_mutex_lock(philo->meal_lock);
-	if (get_current_time() - philo->last_meal >= time_to_die)
+	if (get_current_time() - philo->last_meal >= time_to_die
+		&& philo->is_eating == 0)
 		is_starved = 1;
 	else
 		is_starved = 0;
@@ -27,9 +32,9 @@ static int	starved(t_philo *philo, uint32_t time_to_die)
 
 int	death_checker(t_philo *philos)
 {
-	int	i;
-	int	n;
-	t_table *table;
+	int		i;
+	int		n;
+	t_table	*table;
 
 	i = 0;
 	n = philos->table->num_of_philo;
@@ -38,13 +43,10 @@ int	death_checker(t_philo *philos)
 	{
 		if (starved(&philos[i], philos[i].table->time_to_die))
 		{
-			//printf("entered into death checker\n");
 			pthread_mutex_lock(philos->dead_lock);
 			print_philo_action(DIED, philos, philos[i].id);
 			table->dead_flag = 1;
-			//printf("death checker print: %d\n", table->dead_flag);
 			pthread_mutex_unlock(philos->dead_lock);
-			//printf("exiting death checker\n");
 			return (1);
 		}
 		i++;
@@ -53,12 +55,12 @@ int	death_checker(t_philo *philos)
 }
 
 // check if all the philo has hit the target meals
-int	all_ate(t_philo *philos)
+int	all_philo_ate(t_philo *philos)
 {
 	int	i;
-	int target_meals;
+	int	target_meals;
 	int	met_target;
-	int num;
+	int	num;
 
 	i = 0;
 	num = philos->table->num_of_philo;
@@ -81,25 +83,17 @@ int	all_ate(t_philo *philos)
 	return (0);
 }
 
-
-/**
-This routine will keep checking if the is_dead flag
-*/
 void	*observer_routine(void *p)
 {
-	t_philo *philos;
+	t_philo	*philos;
 
 	philos = (t_philo *)p;
-	//printf("observer routine started\n");
 	while (1)
 	{
-		//printf("entered into observer loop\n");
-		if (death_checker(philos) || all_ate(philos))
+		if (death_checker(philos) || all_philo_ate(philos))
 		{
-			//printf("before observer break");
 			break ;
 		}
 	}
-	//printf("observer routine ended");
 	return (p);
 }

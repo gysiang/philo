@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:22:55 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/04/09 13:09:25 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:23:18 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ int	main(int ac, char **av)
 	if (ac == 5 || ac == 6)
 	{
 		if (check_input(av) == 1)
-		{
 			return (1);
-		}
 		init_simulation(&table, philos, forks, av);
 		start_simulation(&table, philos, forks);
 		end_simulation(NULL, &table, forks);
